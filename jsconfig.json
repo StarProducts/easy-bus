@@ -1,9 +1,9 @@
 {
-    "compilerOptions": {
-      "jsx": "react",
-      "baseUrl": ".",
-      "paths": {
-        "@/*": ["./src/*"]
-      }
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
     }
   }
+}
