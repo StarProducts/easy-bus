@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://starproducts.github.io/easy-bus/",
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@radix-ui/react-slot": "^1.1.2",
     "@shadcn/ui": "^0.0.4",
     "@testing-library/dom": "^10.4.0",
@@ -17,12 +18,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+  "start": "craco start",
+  "build": "craco build",
+  "test": "craco test",
+  "eject": "craco eject",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
