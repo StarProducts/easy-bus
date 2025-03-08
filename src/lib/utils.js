@@ -1,3 +1,6 @@
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
 export const formatTime = (time) => {
   return time.toString().padStart(2, '0');
 };
@@ -38,10 +41,6 @@ export const calculateNextBuses = (timetableData, currentTime, dayType, limit = 
 
   return nextBuses.slice(0, limit);
 };
-
-// 新たに追加する関数
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs) {
   return twMerge(clsx(...inputs));
