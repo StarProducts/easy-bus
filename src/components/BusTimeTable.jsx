@@ -75,7 +75,8 @@ const BusTimeTable = () => {
 
           <div className="text-center mt-4 bus-map">
             <img 
-              src="/images/higashiohjima.gif"
+              // src="/images/higashiohjima.gif"
+              src="https://raw.githubusercontent.com/StarProducts/easy-bus/refs/heads/main/public/images/higashiohjima.gif"
               alt="バス停マップ" 
               className="mx-auto rounded-lg"
             />
