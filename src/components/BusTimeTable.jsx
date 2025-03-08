@@ -1,11 +1,11 @@
+import React, { useState, useEffect } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from './ui/card.tsx';
+import { Button } from './ui/button.tsx';
+import { useBusData } from '../hooks/useBusData.js';
+
 const BusTimeTable = () => {
   const [selectedDay, setSelectedDay] = useState('平日');
   const { timetableData, currentTime, loading, error, reload } = useBusData();
-
-  import React, { useState, useEffect } from 'react';
-  import { Card, CardHeader, CardTitle, CardContent } from './ui/card.tsx';
-  import { Button } from './ui/button.tsx';
-  import { useBusData } from '../hooks/useBusData.js';
   
   const BusTimeTable = () => {
     const { timetableData, currentTime, loading, error, reload } = useBusData();
