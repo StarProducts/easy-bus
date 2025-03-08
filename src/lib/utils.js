@@ -1,6 +1,3 @@
-// src/lib/utils.js
-
-// 既存の関数
 export const formatTime = (time) => {
   return time.toString().padStart(2, '0');
 };
