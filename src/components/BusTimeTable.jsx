@@ -20,10 +20,10 @@ const BusTimeTable = () => {
   }, [currentTime]);
 
   // 選択された曜日の全てのバス時刻を取得
-  const getUpcomingBuses = (dayType) => {
+  const getAllBuses = (dayType) => {
     if (!timetableData) return [];
     const schedule = timetableData.timetable[dayType];
-    const upcomingBuses = [];
+    const allBuses = [];
 
     for (const [hour, minutes] of Object.entries(schedule)) {
       minutes.forEach((minute) => {
@@ -34,17 +34,22 @@ const BusTimeTable = () => {
           parseInt(hour),
           parseInt(minute)
         );
-        if (busTime > currentTime) {
-          upcomingBuses.push({
-            time: `${hour.replace('時', '').padStart(2, '0')}:${minute.padStart(2, '0')}`,
-            date: busTime,
-          });
-        }
+        allBuses.push({
+          time: `${hour.replace('時', '').padStart(2, '0')}:${minute.padStart(2, '0')}`,
+          date: busTime,
+        });
       });
     }
 
     // 時刻順にソート
-    return upcomingBuses.sort((a, b) => a.date - b.date);
+    return allBuses.sort((a, b) => a.date - b.date);
+  };
+
+  // 次のバスを特定し、その前のバスを取得
+  const getNextAndPreviousBus = (buses) => {
+    const nextBusIndex = buses.findIndex(bus => bus.date > currentTime);
+    const previousBusIndex = nextBusIndex > 0 ? nextBusIndex - 1 : null;
+    return { nextBusIndex, previousBusIndex };
   };
 
   if (loading) {
@@ -68,7 +73,18 @@ const BusTimeTable = () => {
     );
   }
 
-  const upcomingBuses = getUpcomingBuses(selectedDay);
+  const allBuses = getAllBuses(selectedDay);
+  const { nextBusIndex, previousBusIndex } = getNextAndPreviousBus(allBuses);
+
+  // 次のバスとその前のバスをリストの先頭に配置
+  const displayedBuses = [];
+  if (previousBusIndex !== null) {
+    displayedBuses.push(allBuses[previousBusIndex]);
+  }
+  if (nextBusIndex !== -1) {
+    displayedBuses.push(allBuses[nextBusIndex]);
+  }
+  displayedBuses.push(...allBuses.slice(nextBusIndex + 1));
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -77,13 +93,6 @@ const BusTimeTable = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="text-center mt-4 bus-map">
-            <img
-              src="https://raw.githubusercontent.com/StarProducts/easy-bus/refs/heads/main/public/images/higashiohjima.gif"
-              alt="バス停マップ"
-              className="mx-auto rounded-lg"
-            />
-          </div>
           <div className="text-center">
             <p className="text-2xl font-bold">
               {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}
@@ -106,16 +115,18 @@ const BusTimeTable = () => {
           </div>
 
           <div className="bg-gray-100 p-4 rounded-lg">
-            <h3 className="text-lg font-semibold mb-2">次のバス時刻</h3>
-            {upcomingBuses.length > 0 ? (
+            <h3 className="text-lg font-semibold mb-2">バス時刻表</h3>
+            {displayedBuses.length > 0 ? (
               <ul>
-                {upcomingBuses.map((bus, index) => (
+                {displayedBuses.map((bus, index) => (
                   <li
                     key={index}
-                    className={`flex justify-between py-1 ${index === 0 ? 'bg-yellow-200 font-bold' : ''}`}
+                    className={`flex justify-between py-1 ${
+                      index === 0 && previousBusIndex !== null ? 'bg-gray-200' : ''
+                    } ${index === (previousBusIndex !== null ? 1 : 0) ? 'bg-yellow-200 font-bold' : ''}`}
                   >
                     <span>{bus.time}</span>
-                    {index === 0 && (
+                    {index === (previousBusIndex !== null ? 1 : 0) && (
                       <span className="text-blue-600">次のバス</span>
                     )}
                   </li>
@@ -124,6 +135,14 @@ const BusTimeTable = () => {
             ) : (
               <p>本日のバスは終了しました</p>
             )}
+          </div>
+
+          <div className="text-center mt-4 bus-map">
+            <img
+              src="https://raw.githubusercontent.com/StarProducts/easy-bus/refs/heads/main/public/images/higashiohjima.gif"
+              alt="バス停マップ"
+              className="mx-auto rounded-lg"
+            />
           </div>
         </div>
       </CardContent>

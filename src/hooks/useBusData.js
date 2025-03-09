@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchTimetableData } from '../services/timetableService';
-import { getDayType, calculateNextBuses } from '../lib/utils';
+import { getDayType, calculateNextBuses } from '../lib/utils.js';
 
 export function useBusData(stopId = 'higashiohjima') {
   const [timetableData, setTimetableData] = useState(null);
