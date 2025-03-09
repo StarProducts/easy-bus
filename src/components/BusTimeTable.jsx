@@ -93,6 +93,13 @@ const BusTimeTable = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
+          <div className="text-center mt-4 bus-map">
+            <img
+              src="https://raw.githubusercontent.com/StarProducts/easy-bus/refs/heads/main/public/images/higashiohjima.gif"
+              alt="バス停マップ"
+              className="mx-auto rounded-lg"
+            />
+          </div>
           <div className="text-center">
             <p className="text-2xl font-bold">
               {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}
@@ -135,14 +142,6 @@ const BusTimeTable = () => {
             ) : (
               <p>本日のバスは終了しました</p>
             )}
-          </div>
-
-          <div className="text-center mt-4 bus-map">
-            <img
-              src="https://raw.githubusercontent.com/StarProducts/easy-bus/refs/heads/main/public/images/higashiohjima.gif"
-              alt="バス停マップ"
-              className="mx-auto rounded-lg"
-            />
           </div>
         </div>
       </CardContent>
